@@ -24,7 +24,7 @@ X scroll bars
 
 ! TEST
 
-- [] PUBLISH
+-[o] PUBLISH
 
 
 
@@ -39,3 +39,14 @@ nice to have
 
 errors
 - Tabs cannot be edited right now (user may be dragging a tab).
+
+# test:
+- [ ] Mercury
+- [x] Venus
+- [x] Earth (Orbit/Moon)
+- [x] Mars
+- [ ] Jupiter
+- [ ] Saturn
+- [ ] Uranus
+- [ ] Neptune
+- [ ] Comet Haley
