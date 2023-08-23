@@ -5,7 +5,7 @@
   "description": "__MSG_extDescription__",
   "default_locale": "en",
 
-  "permissions": ["tabs", "activeTab", "storage", "webNavigation"],
+  "permissions": ["tabs", "storage"],
 
   "icons": {
     "128":"icons/default.png"
