@@ -1,6 +1,7 @@
+# this script zips all for the extension importend files
 import os, re, zipfile
 
-files_and_folders = ["service-worker.js", "manifest.json", "roadmap.md", "zip.py", "icons", "popup", "_locales"]
+files_and_folders = ["service-worker.js", "manifest.json", "icons", "popup", "_locales"]
 cwd = os.path.dirname(__file__)
 export_path = os.path.join(cwd, "export")
 if not os.path.isdir(export_path):
