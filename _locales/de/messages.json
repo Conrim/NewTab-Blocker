@@ -1,0 +1,29 @@
+{
+    "extDescription": {
+        "message": "Blockiert neue Tabs angegebener Websiten"
+    },
+    "active":{
+        "message": "Aktiviert",
+        "description": "text before the switch"
+    },
+    "urlBeginTitle":{
+        "message": "URL-Anfänge"
+    },
+    "urlBeginDesc": {
+        "message": "URLs, welche mit einem der folgenden URL-Anfänge anfangen, werden daran gehindert neue Tabs zu öffen"
+    },
+    "exampleUrl":{
+        "message": "https://www.beispiel.de"
+    },
+    "wrongUrlPatternPromt":{
+        "message": "Die Eingabe '$url$' scheint nicht dem Muster 'https://www.beispiel.de' zu folgen.\n\nSoll die URL trozdem hinzugefügt werden?",
+        "placeholders":{
+            "url":{
+                "content": "$1"
+            }
+        }
+    },
+    "emptyUrlPromt":{
+        "message": "Die Eingabe ist leer. Dies wird neue Tabs jeder Webseite blockieren.\n\nSoll die Eingabe hinzugefügt werden?"
+    }
+}

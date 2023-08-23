@@ -1,0 +1,21 @@
+{
+  "name": "New-Tab Blocker",
+  "manifest_version": 3,
+  "version": "0.0.1",
+  "description": "__MSG_extDescription__",
+  "default_locale": "en",
+
+  "permissions": ["tabs", "activeTab", "storage", "webNavigation", "contextMenus"],
+
+  "icons": {
+    "128":"icons/default.png"
+  },
+  "action": {
+    "default_popup": "popup/index.html",
+    "default_icon": "icons/default.png"
+  },
+  
+  "background": {
+    "service_worker": "service-worker.js"
+  }
+}

@@ -1,0 +1,29 @@
+{
+    "extDescription": {
+        "message": "Blocks new tabs from specified websites"
+    },
+    "active":{
+        "message": "Enabled",
+        "description": "text before the switch"
+    },
+    "urlBeginTitle":{
+        "message": "URL Beginnings"
+    },
+    "urlBeginDesc": {
+        "message": "URLs that start with one of the listed URL beginnings will be blocked from opening new tabs"
+    },
+    "exampleUrl":{
+        "message": "https://www.example.com"
+    },
+    "wrongUrlPatternPromt":{
+        "message": "The input '$url$' does not seem to follow the pattern 'https://www.example.com'.\n\nDo you want to add it anyways?",
+        "placeholders":{
+            "url":{
+                "content": "$1"
+            }
+        }
+    },
+    "emptyUrlPromt":{
+        "message": "The input is empty. This will block tab opening from every website.\n\nDo you want to add it?"
+    }
+}

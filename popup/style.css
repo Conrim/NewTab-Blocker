@@ -1,0 +1,211 @@
+html, body{
+    width: 470px;
+    height: 600px; 
+    margin: 0; 
+    padding: 0;
+    background-color: #333333;
+    color: white;
+}
+body{
+    display: flex;
+    flex-flow: column;
+}
+br{
+    user-select: none;
+}
+
+#title {
+    display: flex;
+    align-items: center;
+    margin: 10px 10px 5px 10px;
+}
+#title img {
+    margin-right: 7px;
+    user-select: none;
+}
+#title h1 {
+    margin: 0;
+}
+
+h2{
+    margin: 10px 10px 5px 10px;
+}
+p{
+   margin: 0px 10px 10px 10px;
+}
+
+#activeDiv{
+    display: flex;
+    align-items: center;
+    /* margin-left: 10px; */
+    margin: 0 10px 0 10px;
+    font-size: 20px;
+}
+#activeDiv p{
+    padding-right: 10px;
+    margin: 0px;
+}
+
+/* listItem */
+.listItem button{
+    background-color: #ff0000;
+    background-image: url('img/x.png');
+    color: white;
+    border-radius: 50%;
+    border: 0px;
+    width: 20px;
+    height: 20px;
+
+    /* center x*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.listItem button:hover{
+    background-color: #c05555;
+}
+.listItem {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 20px;
+    background-color:#333333;
+    height: 30px;
+    padding: 0 10px 0 5px;
+    margin: 5px;
+}
+.listItem>.spacer{
+    width: 4px;
+    height: 0px;
+}
+.listRow{
+    display: block;
+}
+/* inpDiv */
+#inpDiv {
+    display: flex; /* Use flexbox */
+    width: 100%; /* Fill the whole width */
+    background-color: #333333;
+    align-items: center;
+}
+
+#inpBox {
+    flex-grow: 1;
+    margin: 0 10px 0 10px;
+    color: white;
+    background-color: #000000;
+    border: 0;
+    border-radius: 15px;
+    height: 30px;
+    padding: 0 10px 0  10px;
+}
+
+#inpBox:focus{
+    outline: 2px solid #008800;
+}
+
+#addBtn {
+    width: 40px;
+    height: 40px;
+    margin: 0 10px 0 0;
+    z-index: 1;
+
+    background-image: url('img/plus.png');
+    background-color: #00a000;
+    border-radius: 50%;
+    border: 0px;
+    
+    /* center +*/
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#addBtn:hover{
+    background-color: #448844;
+}
+
+#con {
+    padding: 5px;
+    background-color: #000000;
+    overflow-y: auto;
+    height: 200px;
+    border-radius: 18px;
+    border: 10px solid #333333;
+    flex: 1;
+}
+
+#con::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+}
+
+#con::-webkit-scrollbar-track {
+    border-radius: 6px;
+    background-color: #222222;
+    border: 3px solid black;
+}
+
+#con::-webkit-scrollbar-thumb {
+    border-radius: 9px;
+    border: 3px solid transparent;
+    background-clip: content-box;
+    background-color: #969696;
+}
+
+#con::-webkit-scrollbar-corner{
+    background-color: transparent;
+}
+
+
+/* https://www.w3schools.com/howto/howto_css_switch.asp */
+/* The switch - the box around the slider */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 37px;
+    height: 20px;
+  }
+  
+  /* Hide default HTML checkbox */
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  /* The slider */
+  .slider {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 20px;
+
+    cursor: pointer;
+
+    background-color: #000000;
+    border: 1px solid #777;
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 14px;
+    width: 14px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    border-radius: 50%;
+  }
+
+  input:checked + .slider {
+    background-color: #ff0000;
+    border: 1px solid #ffffff;
+  }
+  input:checked + .slider:before {
+    transform: translateX(17px);
+  }
+  
+  input:focus + .slider, input:hover + .slider{
+    box-shadow: 0 0 10px #ffffffd0;
+  }
