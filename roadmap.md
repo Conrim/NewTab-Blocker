@@ -24,7 +24,7 @@ X scroll bars
 
 ! TEST
 
-- PUBLISH
+- [] PUBLISH
 
 
 
