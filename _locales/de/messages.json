@@ -10,7 +10,7 @@
         "message": "URL-Anfänge"
     },
     "urlBeginDesc": {
-        "message": "URLs, welche mit einem der folgenden URL-Anfänge anfangen, werden daran gehindert neue Tabs zu öffen"
+        "message": "URLs, welche mit einem der folgenden URL-Anfänge anfangen, werden daran gehindert neue Tabs zu öffnen"
     },
     "exampleUrl":{
         "message": "https://www.beispiel.de"
