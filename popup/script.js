@@ -108,7 +108,7 @@ function isValid(urlStart){
     if(curUrl === urlStart){
         return true;
     }
-    if (/^https?:\/\/[a-z0-9]+(.[a-z0-9]+)+\/?$/.test(urlStart)){
+    if (/^https?:\/\/[a-z0-9\-_]+(\.[a-z0-9\-_]+)+\/?$/.test(urlStart)){
         return true;
     }
     let t0 = Date.now();
