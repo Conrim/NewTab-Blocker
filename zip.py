@@ -1,29 +1,15 @@
-# this script zips all for the extension importend files
+# this script zips the extension folder
 import os, re, zipfile
 
-files_and_folders = ["service-worker.js", "manifest.json", "icons", "popup", "_locales"]
-cwd = os.path.dirname(__file__)
-export_path = os.path.join(cwd, "export")
-if not os.path.isdir(export_path):
-    os.mkdir(export_path)
-
-def create_path_list(files_and_folders):
-    files_and_folders = [os.path.join(cwd, entity) for entity in files_and_folders]
-
+def create_path_list(folder):
+    """creates a list of full paths of files and folders that shall be zipped"""
     paths = []
-    for path in files_and_folders:
-        if os.path.isdir(path):
-            for dirpath, subdirs, subfiles in os.walk(path):
-                if subdirs == [] and subfiles == []:
-                    paths.append(dirpath) # if folder is empty 
-                paths += [os.path.join(dirpath, subfile) for subfile in subfiles]
-            continue
-        paths.append(path)
+    for dirpath, subdirs, subfiles in os.walk(folder):
+        if subdirs == [] and subfiles == []:
+            # if folder is empty 
+            paths.append(dirpath)
+        paths += [os.path.join(dirpath, subfile) for subfile in subfiles]
     return paths
-
-paths = create_path_list(files_and_folders)
-print(paths)
-
 
 def get_name(path):
     versions = []
@@ -47,9 +33,24 @@ def get_name(path):
     last_version[-1] += 1
     return ('v{}'+ '.{}' * (n - 1) + '.zip').format(*last_version)
 
-name = get_name(export_path)
-print(name)
+cwd = os.path.dirname(__file__)
+extension_path = os.path.join(cwd, "extension")
+paths = create_path_list(extension_path)
 
-with zipfile.ZipFile(os.path.join(export_path, name), "w") as zipf:
+export_folder = os.path.join(cwd, "export")
+if not os.path.isdir(export_folder):
+    # create folder if necessary
+    os.mkdir(export_folder)
+export_path = os.path.join(export_folder, get_name(export_folder))
+
+
+
+print(f"extension path: {extension_path}")
+print(f"export path: {export_path}")
+print("files and folders list: ", *paths, sep="\n\t- ")
+
+with zipfile.ZipFile(export_path, "w") as zipf:
     for path in paths:
-        zipf.write(path, arcname=os.path.relpath(path, start=cwd))
+        zipf.write(path, arcname=os.path.relpath(path, start=extension_path))
+print("finished")
+input("press enter to continue")
