@@ -135,10 +135,11 @@ async function loadState(){
 }
 
 function onClick(){
-    if (!isValid(inpBox.value)){
+    let newUrlStart = inpBox.value.trim();
+    if (!isValid(newUrlStart)){
         return;
     }
-    new Item(inpBox.value);
+    new Item(newUrlStart);
     inpBox.value = "";
 
     saveState();
