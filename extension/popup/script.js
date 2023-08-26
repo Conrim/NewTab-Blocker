@@ -146,15 +146,11 @@ function onClick(){
 }
 
 // try to set inpBox-value to current url
-try{
-    chrome.tabs.query({ currentWindow: true, active: true }, function (tabs) {
+chrome.tabs.query({currentWindow: true, active: true }).then(
+    function (tabs){
         curUrl = trimUrl(tabs[0].url);
         inpBox.value = curUrl;
-    });
-}
-catch(error){
-    console.warn("could not read current url");
-}
+    }).catch( (error) => console.warn("could not read current url"));
 
 btn.onclick = onClick;
 inpBox.onkeyup = (e) => {
