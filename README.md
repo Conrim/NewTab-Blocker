@@ -29,3 +29,7 @@ https://play.google.com/store/apps/details?id=com.kiwibrowser.browser
 3. Click on "Load unpacked""
 
 4. Select the folder: **_NewTab-Blocker/extension/_**
+
+## Screenshot 
+
+![screenshot](imgs/screenshots/en.png)
