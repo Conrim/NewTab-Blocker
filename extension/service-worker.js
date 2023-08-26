@@ -1,7 +1,7 @@
 chrome.tabs.onCreated.addListener(async function(tab){
   freezeCurTabId = true;
-  await closeInCase(tab);
-  if (tmpCurTabId !== undefined){
+  if (!await closeInCase(tab) && tmpCurTabId !== undefined){
+    console.log(`new acitve tab: ${tmpCurTabId} (was on hold)`);
     curTabId = tmpCurTabId;
     tmpCurTabId = undefined;
   }
@@ -36,7 +36,7 @@ async function closeInCase(tab){
   if ("pendingUrl" in tab && !tab.pendingUrl.startsWith("http")){
     // probalby user input (i. e. chrome://newtab/)
     console.log("probably user input");
-    return;
+    return false;
   }
 
   let resolved = await Promise.all([chrome.tabs.query({}), chrome.storage.local.get()]);
@@ -46,17 +46,17 @@ async function closeInCase(tab){
   
   if (!data.active || data.urls.length === 0){
     console.log('not active or empty list');
-    return;
+    return false;
   }
 
   if (tabs.length <= 1){
     console.log('only tab existing => no blocking');
-    return;
+    return false;
   }
 
   if ("" in data.urls){
     closeTab(tab);
-    return;
+    return true;
   }
   
   // get opener Url
@@ -66,7 +66,7 @@ async function closeInCase(tab){
     console.log('could not read openerTabId directly');
     if (curTabId === undefined){
       console.warn('could not recover openerTabId: curTabId === undefind');
-      return;
+      return false;
     }
     // lets make an assumption
     openerTabId = curTabId;
@@ -77,12 +77,11 @@ async function closeInCase(tab){
   } 
   catch(error){
     console.warn(`could not get openerUrl: ${error}`);
-    return;
+    return false;
   }
   if (openerUrl === undefined || openerUrl === ""){
     console.warn(`could not get openerUrl: openerUrl = '${openerUrl}' of tab: ${openerTabId}`);
-    //console.log(await chrome.tabs.get(openerTabId));
-    return;
+    return false;
   }
   console.log(`openerUrl: ${openerUrl}`);
 
@@ -90,10 +89,11 @@ async function closeInCase(tab){
   for(let i = 0; i < data.urls.length; i++){
     if (openerUrl.startsWith(data.urls[i])){
       closeTab(tab);
-      return;
+      return true;
     }
   }
   console.log(`opening '${tab.pendingUrl}' from '${openerUrl}' was allowed`);
+  return false;
 }
 
 // initialize storage if necessary and set icon
