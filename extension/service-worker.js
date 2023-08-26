@@ -25,13 +25,13 @@ async function closeInCase(tab){
   function closeTab(tab){
     chrome.tabs.remove(tab.id).then(() => {
       flashIcon();
-      console.log(`opening '${tab.pendingUrl} was blocked`);
+      console.log(`opening '${tab.pendingUrl}' (id: ${tab.id}) was blocked`);
     }).catch((error) => {
       console.warn(`could not close new tab: ${error}`);
     });
   }
   
-  console.log(`'${tab.pendingUrl}' wants to be opened in a new tab`);  
+  console.log(`'${tab.pendingUrl}' (id: ${tab.id}) wants to be opened in a new tab`);  
 
   if ("pendingUrl" in tab && !tab.pendingUrl.startsWith("http")){
     // probalby user input (i. e. chrome://newtab/)
@@ -92,7 +92,8 @@ async function closeInCase(tab){
       return true;
     }
   }
-  console.log(`opening '${tab.pendingUrl}' from '${openerUrl}' was allowed`);
+  
+  console.log(`opening '${tab.pendingUrl}' (id: ${tab.id}) from '${openerUrl}' (id: ${openerTabId}) was allowed`);
   return false;
 }
 
