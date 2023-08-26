@@ -8,7 +8,7 @@ The extension will soon be available in the Chrome Web Store:
 
 https://example.com
 
-There it can be installed to almost every browser including Chrome, Edge, Opera, Brave... 
+There it can be installed on almost every browser, including Chrome, Edge, Opera, Brave... 
 
 Notable exceptions are Safari and Firefox which are not supported by this extension.
 
@@ -20,7 +20,7 @@ The Kiwi Browser is a good option, it can be installed from the Play store under
 
 https://play.google.com/store/apps/details?id=com.kiwibrowser.browser
 
-### Manuell installation
+### Manuel Installation
 
 1.  Go to the URL: **_chrome://extensions/_**
 
