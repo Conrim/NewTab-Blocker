@@ -1,3 +1,22 @@
+function increaseBadgeCounter(tabId){
+  chrome.action.getBadgeText({tabId: tabId}).then((text) =>{
+    let count = parseInt(text);
+    if (isNaN(count)){
+      count = 0;
+    }
+    count++;
+    chrome.action.setBadgeText({tabId: tabId, text: count.toString()});
+  });
+  chrome.action.setBadgeBackgroundColor({tabId: tabId, color: "black"});
+  chrome.action.setBadgeTextColor({tabId: tabId, color: "white"});
+}
+
+function setBadgeToError(tabId){
+  chrome.action.setBadgeText({tabId: tabId, text: "X"});
+  chrome.action.setBadgeBackgroundColor({tabId: tabId, color: "orange"});
+  chrome.action.setBadgeTextColor({tabId: tabId, color: "black"});
+}
+
 chrome.tabs.onCreated.addListener(async function(tab){
   freezeCurTabId = true;
   if (!await closeInCase(tab) && tmpCurTabId !== undefined){
@@ -22,15 +41,18 @@ function flashIcon(){
 }
 
 async function closeInCase(tab){
-  function closeTab(tab){
+  function closeTab(tab, openerTabId){
     chrome.tabs.remove(tab.id).then(() => {
       flashIcon();
+      if (openerTabId !== undefined){
+        increaseBadgeCounter(openerTabId);
+      }
       console.log(`opening '${tab.pendingUrl}' (id: ${tab.id}) was blocked`);
     }).catch((error) => {
+      setBadgeToError(openerTabId);
       console.warn(`could not close new tab: ${error}`);
     });
   }
-  
   console.log(`'${tab.pendingUrl}' (id: ${tab.id}) wants to be opened in a new tab`);  
 
   if ("pendingUrl" in tab && !tab.pendingUrl.startsWith("http")){
@@ -53,24 +75,31 @@ async function closeInCase(tab){
     console.log('only tab existing => no blocking');
     return false;
   }
-
-  if (data.urls.includes("")){
-    closeTab(tab);
-    return true;
-  }
   
   // get opener Url
   // recover openerTabId if necessary
   let openerTabId = tab.openerTabId;
   if (openerTabId === undefined){
     console.log('could not read openerTabId directly');
-    if (curTabId === undefined){
-      console.warn('could not recover openerTabId: curTabId === undefind');
-      return false;
-    }
+
     // lets make an assumption
     openerTabId = curTabId;
+
+    if (openerTabId === undefined){
+      console.warn('could not recover openerTabId: curTabId === undefind');
+    }
   }
+
+  if (data.urls.includes("")){
+    closeTab(tab, openerTabId);
+    return true;
+  }
+
+  if (openerTabId === undefined){
+    // warning already logged
+    return false;
+  }
+
   let openerUrl;
   try{
     openerUrl = (await chrome.tabs.get(openerTabId)).url;
@@ -85,10 +114,9 @@ async function closeInCase(tab){
   }
   console.log(`openerUrl: ${openerUrl}`);
 
-
   for(let i = 0; i < data.urls.length; i++){
     if (openerUrl.startsWith(data.urls[i])){
-      closeTab(tab);
+      closeTab(tab, openerTabId);
       return true;
     }
   }
