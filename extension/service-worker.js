@@ -54,7 +54,7 @@ async function closeInCase(tab){
     return false;
   }
 
-  if ("" in data.urls){
+  if (data.urls.includes("")){
     closeTab(tab);
     return true;
   }
