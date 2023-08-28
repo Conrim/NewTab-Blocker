@@ -30,6 +30,10 @@ https://play.google.com/store/apps/details?id=com.kiwibrowser.browser
 
 4. Select the folder: **_NewTab-Blocker/extension/_**
 
+## Tips
+
+If you want to block all new tabs, you can add "" to the "URL Beginnings" list.
+
 ## Screenshot 
 
 ![screenshot](imgs/screenshots/en.png)
