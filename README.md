@@ -4,9 +4,9 @@ New-Tab Blocker is a chrome extension that blocks specified websites from openin
 
 ## Installation
 
-The extension will soon be available in the Chrome Web Store:
+The extension is available in the Chrome Web Store under this link:
 
-https://example.com
+https://chrome.google.com/webstore/detail/new-tab-blocker/bkanhpjdajkdnibkplooolgpidgfjfnn
 
 There it can be installed on almost every browser, including Chrome, Edge, Opera, Brave... 
 
