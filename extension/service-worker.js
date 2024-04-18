@@ -90,12 +90,11 @@ async function closeInCase(tab){
     }
   }
 
-  if (data.urls.includes("")){
-    closeTab(tab, openerTabId);
-    return true;
-  }
-
   if (openerTabId === undefined){
+    if (data.urls.includes("")){
+      closeTab(tab, openerTabId);
+      return true;
+    }
     // warning already logged
     return false;
   }
@@ -103,7 +102,7 @@ async function closeInCase(tab){
   let openerUrl;
   try{
     openerUrl = (await chrome.tabs.get(openerTabId)).url;
-  } 
+  }
   catch(error){
     console.warn(`could not get openerUrl: ${error}`);
     return false;
@@ -113,6 +112,12 @@ async function closeInCase(tab){
     return false;
   }
   console.log(`openerUrl: ${openerUrl}`);
+
+  if (openerUrl === tab.pendingUrl){
+    // see issue #1 (1/2)
+    console.log('tab duplication => no blocking');
+    return false;
+  }
 
   for(let i = 0; i < data.urls.length; i++){
     if (openerUrl.startsWith(data.urls[i])){
