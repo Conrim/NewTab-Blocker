@@ -60,6 +60,11 @@ async function closeInCase(tab){
     console.log("probably user input");
     return false;
   }
+  if (/^https:\/\/www.google.com\/search\?.*q=.*&sourceid=((opera)|(chrome))/.test(tab.pendingUrl)){
+    // sse issue #1 (2/2)
+    console.log('search on highlighted text => no blocking');
+    return false;
+  }
 
   let resolved = await Promise.all([chrome.tabs.query({}), chrome.storage.local.get()]);
   //let openerUrl = resolved[0].url;
