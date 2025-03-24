@@ -56,7 +56,7 @@ async function closeInCase(tab){
   console.log(`'${tab.pendingUrl}' (id: ${tab.id}) wants to be opened in a new tab`);  
 
   if ("pendingUrl" in tab && !tab.pendingUrl.startsWith("http")){
-    // probalby user input (i. e. chrome://newtab/)
+    // probably user input (i. e. chrome://newtab/)
     console.log("probably user input");
     return false;
   }
@@ -67,7 +67,7 @@ async function closeInCase(tab){
   }
   if (tab.url && tab.pendingUrl !== tab.url) {
     console.log(`probably restored tab ${tab.pendingUrl} ${tab.url}`);
-    return false
+    return false;
   }
 
   let resolved = await Promise.all([chrome.tabs.query({}), chrome.storage.local.get()]);
