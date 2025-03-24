@@ -20,7 +20,7 @@ function setBadgeToError(tabId){
 chrome.tabs.onCreated.addListener(async function(tab){
   freezeCurTabId = true;
   if (!await closeInCase(tab) && tmpCurTabId !== undefined){
-    console.log(`new acitve tab: ${tmpCurTabId} (was on hold)`);
+    console.log(`new active tab: ${tmpCurTabId} (was on hold)`);
     curTabId = tmpCurTabId;
     tmpCurTabId = undefined;
   }
@@ -47,7 +47,7 @@ async function closeInCase(tab){
       if (openerTabId !== undefined){
         increaseBadgeCounter(openerTabId);
       }
-      console.log(`opening '${tab.pendingUrl}' (id: ${tab.id}) was blocked`);
+      console.log(`opening '${tab.pendingUrl}' (${tab.url}) (id: ${tab.id}) was blocked`);
     }).catch((error) => {
       setBadgeToError(openerTabId);
       console.warn(`could not close new tab: ${error}`);
@@ -64,6 +64,10 @@ async function closeInCase(tab){
     // sse issue #1 (2/2)
     console.log('search on highlighted text => no blocking');
     return false;
+  }
+  if (tab.url && tab.pendingUrl !== tab.url) {
+    console.log(`probably restored tab ${tab.pendingUrl} ${tab.url}`);
+    return false
   }
 
   let resolved = await Promise.all([chrome.tabs.query({}), chrome.storage.local.get()]);
@@ -158,12 +162,12 @@ let tmpCurTabId = undefined;
 function setCurTabId(newId, eventInfo = ""){
   if (freezeCurTabId){
     tmpCurTabId = newId;
-    console.log(`new acitve tab on hold (${eventInfo}): ${newId}`);
+    console.log(`new active tab on hold (${eventInfo}): ${newId}`);
     return;
   }
   curTabId = newId;
 
-  console.log(`new acitve tab (${eventInfo}): ${newId}`);
+  console.log(`new active tab (${eventInfo}): ${newId}`);
 }
 
 chrome.tabs.onActivated.addListener(function(activeInfo) {
