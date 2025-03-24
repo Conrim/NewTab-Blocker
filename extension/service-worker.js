@@ -53,14 +53,15 @@ async function closeInCase(tab){
       console.warn(`could not close new tab: ${error}`);
     });
   }
-  console.log(`'${tab.pendingUrl}' (id: ${tab.id}) wants to be opened in a new tab`);  
+  let tab_url = tab.pendingUrl ? tab.pendingUrl : (tab.url ? tab.url : "");
+  console.log(`'${tab_url}' (id: ${tab.id}) wants to be opened in a new tab`);  
 
-  if ("pendingUrl" in tab && !tab.pendingUrl.startsWith("http")){
+  if (tab_url && !tab_url.startsWith("http")){
     // probably user input (i. e. chrome://newtab/)
     console.log("probably user input");
     return false;
   }
-  if (/^https:\/\/www.google.com\/search\?.*q=.*&sourceid=((opera)|(chrome))/.test(tab.pendingUrl)){
+  if (/^https:\/\/www.google.com\/search\?.*q=.*&sourceid=((opera)|(chrome))/.test(tab_url)){
     // sse issue #1 (2/2)
     console.log('search on highlighted text => no blocking');
     return false;
@@ -122,7 +123,7 @@ async function closeInCase(tab){
   }
   console.log(`openerUrl: ${openerUrl}`);
 
-  if (openerUrl === tab.pendingUrl){
+  if (openerUrl === tab_url){
     // see issue #1 (1/2)
     console.log('tab duplication => no blocking');
     return false;
@@ -135,7 +136,7 @@ async function closeInCase(tab){
     }
   }
   
-  console.log(`opening '${tab.pendingUrl}' (id: ${tab.id}) from '${openerUrl}' (id: ${openerTabId}) was allowed`);
+  console.log(`opening '${tab_url}' (id: ${tab.id}) from '${openerUrl}' (id: ${openerTabId}) was allowed`);
   return false;
 }
 
