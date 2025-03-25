@@ -54,7 +54,7 @@ async function closeInCase(tab){
     });
   }
   let tab_url = tab.pendingUrl ? tab.pendingUrl : (tab.url ? tab.url : "");
-  console.log(`'${tab_url}' (id: ${tab.id}) wants to be opened in a new tab`);  
+  console.log(`'${tab_url}' (id: ${tab.id}) wants to be opened in a new tab`);
 
   if (tab_url && !tab_url.startsWith("http")){
     // probably user input (i. e. chrome://newtab/)
@@ -66,13 +66,24 @@ async function closeInCase(tab){
     console.log('search on highlighted text => no blocking');
     return false;
   }
-  if (tab.url && tab.pendingUrl !== tab.url) {
+  if ((tab.url && tab.pendingUrl !== tab.url) || (tab.lastAccessed > 0 && tab.lastAccessed < Date.now() - 100)) {
     console.log(`probably restored tab ${tab.pendingUrl} ${tab.url}`);
     return false;
   }
 
+  let recentlyClosed = (await chrome.sessions.getRecentlyClosed({ maxResults: 1 }));
+  let curRecentlyClosedId = "-1";
+  if (recentlyClosed.length !== 0){
+    curRecentlyClosedId = recentlyClosed[0].tab ? recentlyClosed[0].tab.sessionId : recentlyClosed[0].window.sessionId;
+  }
+  if (curRecentlyClosedId != recentlyClosedId){
+    // recentlyClosedCount probably decresed because recently closed tab was restored and is therefore not "closed"
+    console.log("tab is probably restored tab (i. e. with Ctrl+Shift+T)");
+    recentlyClosedId = curRecentlyClosedId;
+    return false;
+  }
+
   let resolved = await Promise.all([chrome.tabs.query({}), chrome.storage.local.get()]);
-  //let openerUrl = resolved[0].url;
   let tabs = resolved[0];
   let data = resolved[1];
   
@@ -193,5 +204,20 @@ chrome.tabs.query({"active": true, "lastFocusedWindow": true}).then((tabs) => {
 }).catch((error) => {
   console.warn(`could not get curtabId on startup: ${error}`);
 });
+
+let recentlyClosedId = "-1"; // to detect if new tab is a restored tab (with Ctrl+Shift+T)
+
+function updateRecentlyClosedId(){
+  chrome.sessions.getRecentlyClosed({ maxResults: 1 }, (recentlyClosed) => {
+    if (recentlyClosed.length === 0){
+      recentlyClosedId = "-1";
+      return;
+    }
+    recentlyClosedId = recentlyClosed[0].tab ? recentlyClosed[0].tab.sessionId : recentlyClosed[0].window.sessionId;
+  });
+}
+
+updateRecentlyClosedId(); // udpate on startup
+chrome.tabs.onRemoved.addListener(updateRecentlyClosedId); // update when tab if removed (and counts now as recently closed)
 
 console.log("welcome to the console");

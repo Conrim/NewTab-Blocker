@@ -1,11 +1,11 @@
 {
   "name": "New-Tab Blocker",
   "manifest_version": 3,
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "__MSG_extDescription__",
   "default_locale": "en",
 
-  "permissions": ["tabs", "storage"],
+  "permissions": ["tabs", "storage", "sessions"],
 
   "icons": {
     "128":"icons/default.png"
