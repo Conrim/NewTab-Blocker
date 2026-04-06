@@ -61,8 +61,17 @@ async function closeInCase(tab){
     console.log("probably user input");
     return false;
   }
+
+  if (Date.now() < ctrlClickWindowTimeOut){
+    // probably user input, opened with Ctrl-Click
+    // see issue #6
+    console.log("ctrl-click, user input");
+    ctrlClickWindowTimeOut = -1;
+    return false;
+  }
+
   if (/^https:\/\/www.google.com\/search\?.*q=.*&sourceid=((opera)|(chrome))/.test(tab_url)){
-    // sse issue #1 (2/2)
+    // see issue #1 (2/2)
     console.log('search on highlighted text => no blocking');
     return false;
   }
@@ -140,6 +149,12 @@ async function closeInCase(tab){
     return false;
   }
 
+  if (openerUrl.startsWith("https://www.google.com/")) {
+    // whitelisting google because you often open new tabs from google and very hard to detect ctrl-clicks on www.google.com
+    console.log('https://www.google.com is whitelisted => no blocking');
+    return false;
+  }
+
   for(let i = 0; i < data.urls.length; i++){
     if (openerUrl.startsWith(data.urls[i])){
       closeTab(tab, openerTabId);
@@ -160,9 +175,13 @@ chrome.storage.local.get().then((res) => {
   chrome.action.setIcon({path: res["active"] ? "icons/default.png" : "icons/gray.png"});
 });
 
+let ctrlClickWindowTimeOut = -1;
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse){
   if (request.name === "changeIcon"){
     chrome.action.setIcon({path: request.path});
+  }
+  else if (request.name === "ctrlClick"){
+    ctrlClickWindowTimeOut = request.until;
   }
 });
 
