@@ -2,6 +2,12 @@
     "extDescription": {
         "message": "Blocks new tabs from specified websites"
     },
+    "settingsTitle":{
+        "message": "Settings"
+    },
+    "allowCtrlClick":{
+        "message": "Allow ctrl/shift clicks and middle mouse clicks"
+    },
     "active":{
         "message": "Enabled",
         "description": "text before the switch"
@@ -25,5 +31,38 @@
     },
     "emptyUrlPromt":{
         "message": "The input is empty. This will block tab opening from every website.\n\nDo you want to add it?"
+    },
+    
+
+
+    "permissionTitle":{
+        "message": "Permission required"
+    },
+    "permissionText":{
+        "message": "To detect tabs opened via <kbd>Ctrl</kbd>&thinsp;/&thinsp;<kbd>Shift</kbd> click or middle mouse button, the extension needs additional permissions."
+    },
+    "permissionBtn":{
+        "message": "Grant permission"
+    },
+    "informationTitle":{
+        "message": "More information"
+    },
+    "privacyTitle":{
+        "message": "Your privacy"
+    },
+    "privacyText":{
+        "message": "No data is collected, stored, or transmitted. Everything happens locally in your browser."
+    },
+    "openSourceTitle":{
+        "message": "Open source"
+    },
+    "openSourceText":{
+        "message": "Fully open source — <a href=\"https://github.com/Conrim/NewTab-Blocker\" target=\"_blank\">view the code on GitHub</a>."
+    },
+    "permissionGranted":{
+        "message": "Permission granted!"
+    },
+    "permissionDenied":{
+        "message": "Permission denied."
     }
 }

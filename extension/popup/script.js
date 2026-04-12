@@ -25,6 +25,7 @@ const inpBox = document.getElementById("inpBox");
 const con = document.getElementById("con");
 const btn = document.getElementById("addBtn");
 const activeSwitch = document.getElementById("activeSwitch");
+const allowCtrlClickSwitch = document.getElementById("allowCtrlClickSwitch");
 
 let curUrl;
 
@@ -123,15 +124,16 @@ function isValid(urlStart){
 function saveState(){
     chrome.storage.local.set({
         urls: Item.allItems.map(item => item.urlStart),
-        active: activeSwitch.checked
+        active: activeSwitch.checked,
+        allowCtrlClick: allowCtrlClickSwitch.checked
     });
 }
 
 async function loadState(){
     let data = await chrome.storage.local.get();
     data["urls"].forEach(urlStart => new Item(urlStart));
-    activeSwitch
     activeSwitch.checked = data["active"];
+    allowCtrlClickSwitch.checked = data["allowCtrlClick"];
 }
 
 function onClick(){
@@ -144,6 +146,18 @@ function onClick(){
 
     saveState();
 }
+
+async function allowCtrlClickSwitch_onchange() {
+    const granted = await chrome.permissions.contains({ origins: ["<all_urls>"] });
+
+    if (granted) {
+        saveState();
+        return;
+    }
+
+    chrome.tabs.create({ url: "permissionExplanation/index.html" });
+}
+
 
 // try to set inpBox-value to current url
 chrome.tabs.query({currentWindow: true, active: true }).then(
@@ -159,6 +173,7 @@ inpBox.onkeyup = (e) => {
     }
 }
 
+allowCtrlClickSwitch.onchange = allowCtrlClickSwitch_onchange;
 activeSwitch.onchange = () => {
     saveState();
     chrome.runtime.sendMessage({name:"changeIcon", path: activeSwitch.checked ? "icons/default.png" : "icons/gray.png"});

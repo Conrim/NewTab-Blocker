@@ -34,22 +34,24 @@ p{
    margin: 0px 10px 10px 10px;
 }
 
-#activeDiv{
+#activeDiv, #allowCtrlClickDiv{
     display: flex;
     align-items: center;
     /* margin-left: 10px; */
+    justify-content: space-between; /* add this */
     margin: 0 10px 0 10px;
-    font-size: 20px;
+    font-size: 15px;
 }
-#activeDiv p{
+#activeDiv p, #allowCtrlClickDiv p{
     padding-right: 10px;
     margin: 0px;
+    flex: 1; /* add this */
 }
 
 /* listItem */
 .listItem button{
     background-color: #ff0000;
-    background-image: url('img/x.png');
+    background-image: url('../img/x.png');
     color: white;
     border-radius: 50%;
     border: 0px;
@@ -109,7 +111,7 @@ p{
     margin: 0 10px 0 0;
     z-index: 1;
 
-    background-image: url('img/plus.png');
+    background-image: url('../img/plus.png');
     background-color: #00a000;
     border-radius: 50%;
     border: 0px;

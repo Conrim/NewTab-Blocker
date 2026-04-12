@@ -2,6 +2,13 @@
     "extDescription": {
         "message": "Blockiert neue Tabs angegebener Websiten"
     },
+    "settingsTitle":{
+        "message": "Einstellungen"
+    },
+    "allowCtrlClick":{
+        "message": "Erlaube Strg/Shift Klicks und Mittelklick"
+    },
+
     "active":{
         "message": "Aktiviert",
         "description": "text before the switch"
@@ -25,5 +32,38 @@
     },
     "emptyUrlPromt":{
         "message": "Die Eingabe ist leer. Dies wird neue Tabs jeder Webseite blockieren.\n\nSoll die Eingabe hinzugefügt werden?"
+    },
+
+
+
+    "permissionTitle":{
+        "message": "Berechtigungen erforderlich"
+    },
+    "permissionText":{
+        "message": "Um Tabs zu erkennen, die über <kbd>Ctrl</kbd>&thinsp;/&thinsp;<kbd>Shift</kbd> Klick oder Mittelklick geöffnet wurden, benötigt die Erweiterung zusätzliche Berechtigungen."
+    },
+    "permissionBtn":{
+        "message": "Berechtigung erteilen"
+    },
+    "informationTitle":{
+        "message": "Weitere Informationen"
+    },
+    "privacyTitle":{
+        "message": "Deine Privatsphäre"
+    },
+    "privacyText":{
+        "message": "Es werden keine Daten gesammelt, gespeichert oder übertragen. Alles passiert lokal in deinem Browser."
+    },
+    "openSourceTitle":{
+        "message": "Open Source"
+    },
+    "openSourceText":{
+        "message": "Vollständig Open Source — <a href=\"https://github.com/Conrim/NewTab-Blocker\" target=\"_blank\">Source Code auf GitHub</a>."
+    },
+    "permissionGranted":{
+        "message": "Berechtigung erteilt!"
+    },
+    "permissionDenied":{
+        "message": "Berechtigung abgelehnt."
     }
 }

@@ -62,14 +62,6 @@ async function closeInCase(tab){
     return false;
   }
 
-  if (Date.now() < ctrlClickWindowTimeOut){
-    // probably user input, opened with Ctrl-Click
-    // see issue #6
-    console.log("ctrl-click, user input");
-    ctrlClickWindowTimeOut = -1;
-    return false;
-  }
-
   if (/^https:\/\/www.google.com\/search\?.*q=.*&sourceid=((opera)|(chrome))/.test(tab_url)){
     // see issue #1 (2/2)
     console.log('search on highlighted text => no blocking');
@@ -98,6 +90,14 @@ async function closeInCase(tab){
   
   if (!data.active || data.urls.length === 0){
     console.log('not active or empty list');
+    return false;
+  }
+  
+  if (data.allowCtrlClick && (Date.now() < ctrlClickWindowTimeOut)){
+    // probably user input, opened with Ctrl-Click
+    // see issue #6
+    console.log("ctrl-click, user input");
+    ctrlClickWindowTimeOut = -1;
     return false;
   }
 
@@ -238,5 +238,19 @@ function updateRecentlyClosedId(){
 
 updateRecentlyClosedId(); // udpate on startup
 chrome.tabs.onRemoved.addListener(updateRecentlyClosedId); // update when tab if removed (and counts now as recently closed)
+
+chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+  if (changeInfo.status !== "loading") return; // closest to document_start
+  
+  chrome.permissions.contains({ origins: ["<all_urls>"] }, (granted) => {
+    if (!granted) return;
+    console.log("onUpdated");
+    chrome.scripting.executeScript({
+      target: { tabId, allFrames: true },
+      files: ["key-state.js"],
+      injectImmediately: true // equivalent to run_at: document_start
+    }).catch(() => {console.log("failed to inject into tab: " + tab.url);});
+  });
+});
 
 console.log("welcome to the console");

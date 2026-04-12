@@ -4,7 +4,8 @@
   "version": "0.0.5",
   "description": "__MSG_extDescription__",
   "default_locale": "en",
-  "permissions": ["tabs", "storage", "sessions"],
+  "permissions": ["tabs", "storage", "sessions", "scripting"],
+  "optional_host_permissions": ["<all_urls>"],
   "icons": {
     "128": "icons/default.png"
   },
@@ -14,13 +15,5 @@
   },
   "background": {
     "service_worker": "service-worker.js"
-  },
-  "content_scripts": [
-    {
-      "matches": ["<all_urls>"],
-      "js": ["key-state.js"],
-      "run_at": "document_start",
-      "all_frames": true
-    }
-  ]
+  }
 }
